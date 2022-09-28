@@ -10,7 +10,7 @@ void ResetCin() {
 	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
-int main() {
+void Encryptor() {
 	while (true)
 	{
 		bool done;
@@ -26,7 +26,7 @@ int main() {
 			cout << "*enter the seed you want to use" << endl << "   ";
 			cin >> seed;
 
-			if (!cin)
+			if (!cin || seed > 9024 || seed < 0)
 			{
 				ResetCin();
 				cout << "*Err: please enter a valid seed (0 - 9024)" << endl << endl;
@@ -80,38 +80,11 @@ int main() {
 			}
 		}
 
-		string dec = Input;
-		string enc = Input;
-
-		for (int i = 0; i < Input.size(); i++)
-		{
-			dec = segregateString(dec, dec.size() - i - 1, seed, true);
-		}
-		for (int i = 0; i < Input.size(); i++)
-		{
-			enc = segregateString(enc, i, seed, false);
-		}
-
 		string out = Input;
 		string check = Input;
-		if (decode)
-		{
-			out = dec;
-			check = dec;
-			for (int i = 0; i < Input.size(); i++)
-			{
-				check = segregateString(check, i, seed, false);
-			}
-		}
-		else
-		{
-			out = enc;
-			check = enc;
-			for (int i = 0; i < Input.size(); i++)
-			{
-				check = segregateString(check, check.size() - i - 1, seed, true);
-			}
-		}
+
+		out = encryptString(Input, seed, decode, 2);
+		check = encryptString(out, seed, !decode, 2);
 
 		if (Input == check)
 		{
@@ -122,8 +95,12 @@ int main() {
 			ResetCin();
 			cout << "*Err: Undefined sequence inputted" << endl << "*Restarting" << endl << endl << endl;
 		}
-
 	}
+}
+
+int main() {
+
+	Encryptor();
 
 	return 0;
 }

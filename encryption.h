@@ -75,4 +75,26 @@ string segregateString(string Input, int place, int seed, bool Decode) {
 	return out;
 }
 
+string encryptString(string Input, int seed, bool decode, int depth) {
+	string out = Input;
+	for (int i = 0; i < depth; i++)
+	{
+		if (decode)
+		{
+			for (int i = 0; i < Input.size(); i++)
+			{
+				out = segregateString(out, out.size() - i - 1, seed, true);
+			}
+		}
+		else
+		{
+			for (int i = 0; i < Input.size(); i++)
+			{
+				out = segregateString(out, i, seed, false);
+			}
+		}
+	}
+	return out;
+}
+
 #endif ENCRYPTION_H
