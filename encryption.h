@@ -58,6 +58,8 @@ string segregateString(string Input, int place, int seed, bool Decode) {
 		in = string(1, Input.at(place)) + string(1, Input.at(place + 1));
 	}
 
+	cout << in << "   ";
+
 	in = encrypt(in, seed, Decode);
 	string out = Input;
 
@@ -71,6 +73,8 @@ string segregateString(string Input, int place, int seed, bool Decode) {
 		out.at(place) = in.at(0);
 		out.at(place + 1) = in.at(1);
 	}
+
+	cout << in << endl;
 
 	return out;
 }
