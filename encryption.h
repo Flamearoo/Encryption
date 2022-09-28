@@ -3,26 +3,34 @@
 
 using namespace std;
 
+int conInt(char in) {
+	return static_cast<int>(in) - 32;
+}	
+
+char conChar(int in) {
+	return char(in + 32);
+}
+
 int convertInt(string Input) {
-	return 256 * ((int)Input.at(0)) + ((int)Input.at(1));
+	return 95 * (conInt(Input.at(0))) + (conInt(Input.at(1)));
 }
 
 string convertString(int Input) {
 	string Out = "  ";
-	Out.at(0) = (char)(int)floor((float)Input / (float)256);
-	Out.at(1) = (char)(int)(Input - 256 * floor((float)Input / (float)256));
+	Out.at(0) = conChar(floor((float)Input / (float)95));
+	Out.at(1) = conChar(Input - (95 * floor((float)Input / (float)95)));
 	return Out;
 }
 
 int encodeNumber(int Input, int seed) {
-	float cap = 65536;
-	float out = (481 * Input) + (53 * seed);
+	float cap = 9025;
+	float out = (547 * Input) + (53 * seed);
 	return out - (cap * floor(out / cap));
 }
 
 int decodeNumber(int Input, int seed) {
-	float cap = 65536;
-	float out = (545) * (Input - (53 * seed));
+	float cap = 9025;
+	float out = 33 * (Input - (53 * seed));
 	return out - (cap * floor(out / cap));
 }
 

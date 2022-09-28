@@ -1,5 +1,7 @@
+#include <string>
 #include <iostream>
 #include "encryption.h"
+#include <stdlib.h>
 
 using namespace std;
 
@@ -11,65 +13,116 @@ void ResetCin() {
 int main() {
 	while (true)
 	{
-		int seed;
+		bool done;
+
+		int seed = 0;
 		string decodeS;
-		bool decode;
+		bool decode = false;
 		string Input;
 
-		cout << "enter the seed you want to use" << endl;
-		cin >> seed;
-
-		if (!cin)
+		done = true;
+		while (done)
 		{
-			ResetCin();
-			cout << "please enter a valid seed" << endl << endl;
-			continue;
+			cout << "*enter the seed you want to use" << endl << "   ";
+			cin >> seed;
+
+			if (!cin)
+			{
+				ResetCin();
+				cout << "*Err: please enter a valid seed (0 - 9024)" << endl << endl;
+				continue;
+			}
+			else
+			{
+				done = false;
+			}
 		}
 
-		cout << "would you like to decode ('d') or encode ('e')" << endl;
-		cin >> decodeS;
-
-		if (decodeS == "d")
+		done = true;
+		while (done)
 		{
-			decode = true;
+			cout << endl << "*would you like to decode ('d') or encode ('e')" << endl << "   ";
+			cin >> decodeS;
+
+			if (decodeS == "d")
+			{
+				decode = true;
+				done = false;
+			}
+			else if (decodeS == "e")
+			{
+				decode = false;
+				done = false;
+			}
+			else
+			{
+				ResetCin();
+				cout << "*Err: please enter either 'd' or 'e'" << endl << endl;
+				continue;
+			}
 		}
-		else if (decodeS == "e")
+		done = true;
+		while (done)
 		{
-			decode = false;
-		}
-		else
-		{
-			ResetCin();
-			cout << "please enter either 'd' or 'e'" << endl << endl;
-			continue;
+			cout << endl << "*enter the string you want to encrypt" << endl << "   ";
+			cin.ignore();
+			getline(cin, Input);
+
+			if (!cin)
+			{
+				ResetCin();
+				cout << "*Err: please enter a valid input" << endl << endl;
+				continue;
+			}
+			else
+			{
+				done = false;
+			}
 		}
 
-		cout << "enter the string you want to encrypt" << endl;
-		cin >> Input;
+		string dec = Input;
+		string enc = Input;
 
-		if (!cin)
+		for (int i = 0; i < Input.size(); i++)
 		{
-			ResetCin();
-			cout << "please enter a valid input" << endl << endl;
-			continue;
+			dec = segregateString(dec, dec.size() - i - 1, seed, true);
+		}
+		for (int i = 0; i < Input.size(); i++)
+		{
+			enc = segregateString(enc, i, seed, false);
 		}
 
+		string out = Input;
+		string check = Input;
 		if (decode)
 		{
+			out = dec;
+			check = dec;
 			for (int i = 0; i < Input.size(); i++)
 			{
-				Input = segregateString(Input, Input.size() - i - 1, seed, true);
+				check = segregateString(check, i, seed, false);
 			}
 		}
 		else
 		{
+			out = enc;
+			check = enc;
 			for (int i = 0; i < Input.size(); i++)
 			{
-				Input = segregateString(Input, i, seed, false);
+				check = segregateString(check, check.size() - i - 1, seed, true);
 			}
 		}
 
-		cout << Input << endl << endl;
+		if (Input == check)
+		{
+			cout << endl << "*Encryption was a success:" << endl << "   " << out << endl << endl << endl;
+		}
+		else
+		{
+			ResetCin();
+			cout << "*Err: Undefined sequence inputted" << endl << "*Restarting" << endl << endl << endl;
+		}
+
 	}
 
 	return 0;
