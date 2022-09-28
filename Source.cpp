@@ -92,7 +92,6 @@ void Encryptor() {
 		}
 		else
 		{
-			ResetCin();
 			cout << "*Err: Undefined sequence inputted" << endl << "*Restarting" << endl << endl << endl;
 		}
 	}

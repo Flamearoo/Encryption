@@ -11,40 +11,26 @@ char conChar(int in) {
 	return char(in + 32);
 }
 
-int convertInt(string Input) {
-	return 95 * (conInt(Input.at(0))) + (conInt(Input.at(1)));
-}
-
-string convertString(int Input) {
-	string Out = "  ";
-	Out.at(0) = conChar(floor((float)Input / (float)95));
-	Out.at(1) = conChar(Input - (95 * floor((float)Input / (float)95)));
-	return Out;
-}
-
-int encodeNumber(int Input, int seed) {
-	float cap = 9025;
-	float out = (547 * Input) + (53 * seed);
-	return out - (cap * floor(out / cap));
-}
-
-int decodeNumber(int Input, int seed) {
-	float cap = 9025;
-	float out = 33 * (Input - (53 * seed));
-	return out - (cap * floor(out / cap));
+int Wrap(int in, int cap) {
+	return in - cap * floor((float)in / (float)cap);
 }
 
 string encrypt(string Input, int seed, bool Decode) {
-	int val = convertInt(Input);
+	int a = conInt(Input.at(0));
+	int b = conInt(Input.at(1));
+	int o = NULL;
 	if (Decode)
 	{
-		val = decodeNumber(val, seed);
+		o = Wrap(12 * (b - (a * seed)), 95);
 	}
 	else
 	{
-		val = encodeNumber(val, seed);
+		o = Wrap((8 * b) + (a * seed), 95);
 	}
-	return convertString(val);
+	string out = "  ";
+	out.at(0) = conChar(a);
+	out.at(1) = conChar(o);
+	return out;
 }
 
 string segregateString(string Input, int place, int seed, bool Decode) {
@@ -57,8 +43,6 @@ string segregateString(string Input, int place, int seed, bool Decode) {
 	{
 		in = string(1, Input.at(place)) + string(1, Input.at(place + 1));
 	}
-
-	cout << in << "   ";
 
 	in = encrypt(in, seed, Decode);
 	string out = Input;
@@ -73,8 +57,6 @@ string segregateString(string Input, int place, int seed, bool Decode) {
 		out.at(place) = in.at(0);
 		out.at(place + 1) = in.at(1);
 	}
-
-	cout << in << endl;
 
 	return out;
 }
