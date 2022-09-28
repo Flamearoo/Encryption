@@ -115,7 +115,7 @@ int main() {
 
 		if (Input == check)
 		{
-			cout << endl << "*Encryption was a success:" << endl << "   " << out << endl << endl << endl;
+			cout << endl << "*Encryption was a success:" << endl << "   Out: " << out << endl << endl << endl;
 		}
 		else
 		{
