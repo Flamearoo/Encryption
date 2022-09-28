@@ -15,15 +15,15 @@ string convertString(int Input) {
 }
 
 int encodeNumber(int Input, int seed) {
-	int cap = 65536;
-	int out = (481 * Input) + (53 * seed);
-	return out - (cap * floor((float)out / (float)cap));
+	float cap = 65536;
+	float out = (481 * Input) + (53 * seed);
+	return out - (cap * floor(out / cap));
 }
 
 int decodeNumber(int Input, int seed) {
-	int cap = 65536;
-	int out = (545) * (Input - (53 * seed));
-	return out - (cap * floor((float)out / (float)cap));
+	float cap = 65536;
+	float out = (545) * (Input - (53 * seed));
+	return out - (cap * floor(out / cap));
 }
 
 string encrypt(string Input, int seed, bool Decode) {

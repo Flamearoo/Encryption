@@ -14,7 +14,7 @@ int main() {
 		int seed;
 		string decodeS;
 		bool decode;
-		int Input;
+		string Input;
 
 		cout << "enter the seed you want to use" << endl;
 		cin >> seed;
@@ -54,7 +54,22 @@ int main() {
 			continue;
 		}
 
-		cout << decodeNumber(encodeNumber(Input, seed), seed) << endl << endl;
+		if (decode)
+		{
+			for (int i = 0; i < Input.size(); i++)
+			{
+				Input = segregateString(Input, Input.size() - i - 1, seed, true);
+			}
+		}
+		else
+		{
+			for (int i = 0; i < Input.size(); i++)
+			{
+				Input = segregateString(Input, i, seed, false);
+			}
+		}
+
+		cout << Input << endl << endl;
 	}
 
 	return 0;
