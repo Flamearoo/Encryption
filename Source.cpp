@@ -38,7 +38,7 @@ void Encryptor() {
 
 		if (cin.fail())
 		{
-			cout << "fatal error" << endl << "-rebooting";
+			cout << "fatal error" << endl << "rebooting" << endl << endl << endl;
 			ResetCin();
 			continue;
 		}
