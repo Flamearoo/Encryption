@@ -11,6 +11,29 @@ void ResetCin() {
 }
 
 void Encryptor() {
+	bool Debug;
+	string in;
+	char v[1];
+	cout << "Would you like to start in debug mode? ('y' 'n') *very complicated, documentation must be read before use" << endl << "   ";
+	cin >> in;
+
+	int p1 = 8;
+	int p2 = 12;
+	int displace = 0;
+
+	if (in == "y") {
+		cout << endl << "Multiplier 1 (default 8)" << endl << "   ";
+		cin >> p1;
+
+		cout << endl << "Multiplier 2 (default 12)" << endl << "   ";
+		cin >> p2;
+
+		cout << endl << "Displacement (default 0)" << endl << "   ";
+		cin >> displace;
+
+		cout << endl << endl;
+	}
+
 	while (true)
 	{
 		bool done;
@@ -23,7 +46,7 @@ void Encryptor() {
 		done = true;
 		while (done)
 		{
-			cout << "*enter the seed you want to use" << endl << "   ";
+			cout << endl << "*enter the seed you want to use" << endl << "   ";
 			cin >> seed;
 
 			if (!cin || seed > 9024 || seed < 0)
@@ -83,8 +106,8 @@ void Encryptor() {
 		string out = Input;
 		string check = Input;
 
-		out = encryptString(Input, seed, decode, 2);
-		check = encryptString(out, seed, !decode, 2);
+		out = encryptString(Input, seed, decode, 2, p1, p2, displace);
+		check = encryptString(out, seed, !decode, 2, p1, p2, displace);
 
 		if (Input == check)
 		{

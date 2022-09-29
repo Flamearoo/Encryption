@@ -15,17 +15,17 @@ int Wrap(int in, int cap) {
 	return in - cap * floor((float)in / (float)cap);
 }
 
-string encrypt(string Input, int seed, bool Decode) {
+string encrypt(string Input, int seed, bool Decode, int p1, int p2, int displace) {
 	int a = conInt(Input.at(0));
 	int b = conInt(Input.at(1));
 	int o = NULL;
 	if (Decode)
 	{
-		o = Wrap(12 * (b - (a * seed)), 95);
+		o = Wrap(p2 * (b - (a * seed) - displace), 95);
 	}
 	else
 	{
-		o = Wrap((8 * b) + (a * seed), 95);
+		o = Wrap((p1 * b) + (a * seed) + displace, 95);
 	}
 	string out = "  ";
 	out.at(0) = conChar(a);
@@ -33,7 +33,7 @@ string encrypt(string Input, int seed, bool Decode) {
 	return out;
 }
 
-string segregateString(string Input, int place, int seed, bool Decode) {
+string segregateString(string Input, int place, int seed, bool Decode, int p1, int p2, int displace) {
 	string in;
 	if (place == Input.size() - 1)
 	{
@@ -44,7 +44,7 @@ string segregateString(string Input, int place, int seed, bool Decode) {
 		in = string(1, Input.at(place)) + string(1, Input.at(place + 1));
 	}
 
-	in = encrypt(in, seed, Decode);
+	in = encrypt(in, seed, Decode, p1, p2, displace);
 	string out = Input;
 
 	if (place == Input.size() - 1)
@@ -61,7 +61,7 @@ string segregateString(string Input, int place, int seed, bool Decode) {
 	return out;
 }
 
-string encryptString(string Input, int seed, bool decode, int depth) {
+string encryptString(string Input, int seed, bool decode, int depth, int p1, int p2, int displace) {
 	string out = Input;
 	for (int i = 0; i < depth; i++)
 	{
@@ -69,14 +69,14 @@ string encryptString(string Input, int seed, bool decode, int depth) {
 		{
 			for (int i = 0; i < Input.size(); i++)
 			{
-				out = segregateString(out, out.size() - i - 1, seed, true);
+				out = segregateString(out, out.size() - i - 1, seed, true, p1, p2, displace);
 			}
 		}
 		else
 		{
 			for (int i = 0; i < Input.size(); i++)
 			{
-				out = segregateString(out, i, seed, false);
+				out = segregateString(out, i, seed, false, p1, p2, displace);
 			}
 		}
 	}
