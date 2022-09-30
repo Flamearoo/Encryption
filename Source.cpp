@@ -18,7 +18,7 @@ void Encryptor() {
 		int p1 = 8;
 		int p2 = 12;
 		int displace = 0;
-		int depth = 0;
+		int depth = 2;
 
 		if (in == "y") {
 			cout << endl << "Multiplier 1 (default 8)" << endl << "   ";
